@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Upload, AlertCircle } from 'lucide-react';
 import { StarRating } from './StarRating';
+import ramakosLogoFull from '../assets/ramakos-logo-full.png';
 import { FeedbackData, FormErrors } from '../types/feedback';
 import { validateForm, isValidForm } from '../utils/validation';
 import { submitFeedback } from '../services/feedbackService';
@@ -85,22 +86,18 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({ onSubmit }) => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-red-50/40 via-white to-neutral-100 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-xl border border-red-100/60 max-w-md w-full p-6">
-        {/* Header with Ramakos Logo */}
+        {/* Header with Ramakos Full Logo */}
         <div className="text-center mb-6">
           <img
-            src="/src/assets/ramakos-logo.png"
-            alt="Ramakos Logo"
-            className="w-16 h-16 mx-auto mb-2 object-contain"
-            onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }}
+            src={ramakosLogoFull}
+            alt="Ramakos Catering Service"
+            className="h-16 md:h-20 w-auto mx-auto mb-3 object-contain"
           />
-          <span className="inline-block text-xs uppercase tracking-wider font-semibold text-[#CA251F] bg-red-50 px-3 py-1 rounded-full mb-2">
-            Ramakos Catering Service
-          </span>
-          <h1 className="text-2xl font-bold text-gray-900 mb-1">
+          <h1 className="text-2xl font-bold text-gray-900 mb-1 tracking-tight">
             We'd love your feedback!
           </h1>
           <p className="text-sm text-gray-500">
-            Good Food, Good Taste — help us serve you better
+            Help us serve you better — good food, good taste
           </p>
         </div>
 

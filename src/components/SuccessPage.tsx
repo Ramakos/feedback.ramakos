@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import ramakosLogoFull from '../assets/ramakos-logo-full.png';
 
 interface SuccessPageProps {
   onRedirect: () => void;
@@ -18,10 +19,9 @@ export const SuccessPage: React.FC<SuccessPageProps> = ({ onRedirect }) => {
       <div className="bg-white rounded-2xl shadow-xl border border-red-100/60 p-8 max-w-sm w-full text-center">
         <div className="mb-6">
           <img
-            src="/src/assets/ramakos-logo.png"
-            alt="Ramakos Logo"
-            className="w-16 h-16 mx-auto mb-3 object-contain"
-            onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }}
+            src={ramakosLogoFull}
+            alt="Ramakos Catering Service"
+            className="h-14 w-auto mx-auto mb-4 object-contain"
           />
           <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-4 border border-red-100">
             <div className="text-[#CA251F] text-2xl font-bold">✓</div>
