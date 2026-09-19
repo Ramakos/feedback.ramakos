@@ -1,5 +1,7 @@
 {
   "name": "ramakos-customer-feedback",
+  "description": "Ramakos Catering Service — Customer Feedback & Suggestions",
+  "author": "Ramakos Catering Service",
   "private": true,
   "version": "0.0.0",
   "type": "module",
