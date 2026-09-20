@@ -5,12 +5,14 @@ import ramakosLogoFull from '../assets/ramakos-logo-full.png';
 import { FeedbackData, FormErrors } from '../types/feedback';
 import { validateForm, isValidForm } from '../utils/validation';
 import { submitFeedback } from '../services/feedbackService';
+import { useToast } from './Toast';
 
 interface FeedbackFormProps {
   onSubmit: (data: FeedbackData) => void;
 }
 
 export const FeedbackForm: React.FC<FeedbackFormProps> = ({ onSubmit }) => {
+  const toast = useToast();
   const [formData, setFormData] = useState<Partial<FeedbackData>>({
     type: undefined,
     message: '',
@@ -27,6 +29,11 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({ onSubmit }) => {
     if (errors.type) {
       setErrors(prev => ({ ...prev, type: undefined }));
     }
+    if (type === 'complaint') {
+      toast.info('Complaint Selected', 'Please let us know what happened so we can make it right.');
+    } else {
+      toast.info('Suggestion Selected', 'We love new ideas to improve our service!');
+    }
   };
 
   const handleMessageChange = (message: string) => {
@@ -41,13 +48,27 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({ onSubmit }) => {
     if (errors.rating) {
       setErrors(prev => ({ ...prev, rating: undefined }));
     }
+    if (rating === 5) {
+      toast.success('5 Stars!', 'Thank you! We are delighted you had an excellent experience.');
+    } else if (rating === 4) {
+      toast.success('4 Stars — Good', 'Thank you! Let us know how we can earn that 5th star.');
+    } else if (rating === 3) {
+      toast.info('3 Stars — Average', 'We appreciate your candid rating.');
+    } else if (rating > 0) {
+      toast.warning(`${rating} Star${rating > 1 ? 's' : ''}`, 'We are sorry your experience fell short. Please share details below.');
+    }
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        toast.warning('File Too Large', 'Please upload a photo smaller than 5MB');
+        return;
+      }
       setFormData(prev => ({ ...prev, file }));
       setFileName(file.name);
+      toast.success('Photo Attached', `${file.name} ready for upload`);
     }
   };
 
@@ -68,6 +89,7 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({ onSubmit }) => {
     if (!isValidForm(validationErrors)) {
       setErrors(validationErrors);
       setIsSubmitting(false);
+      toast.error('Please Complete the Form', 'Fill in the required fields before submitting.');
       return;
     }
 
@@ -75,9 +97,12 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({ onSubmit }) => {
     const result = await submitFeedback(formData as FeedbackData);
     
     if (result.success) {
+      toast.success('Feedback Received', 'Thank you for helping Ramakos serve you better!');
       onSubmit(formData as FeedbackData);
     } else {
-      setSubmitError(result.error || 'Failed to submit feedback');
+      const err = result.error || 'Failed to submit feedback. Please check your connection.';
+      setSubmitError(err);
+      toast.error('Submission Failed', err);
     }
     
     setIsSubmitting(false);
