@@ -8,7 +8,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.png', 'apple-touch-icon.png', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'offline.html'],
+      includeAssets: ['favicon.png', 'apple-touch-icon.png', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'offline.html', 'ramakos-logo-full.png'],
       manifest: {
         name: 'Ramakos Customer Feedback',
         short_name: 'Feedback',
@@ -19,6 +19,7 @@ export default defineConfig({
         orientation: 'portrait',
         scope: '/',
         start_url: '/',
+        categories: ['food', 'lifestyle'],
         icons: [
           {
             src: '/icon-192.png',
@@ -35,6 +36,15 @@ export default defineConfig({
             sizes: '512x512',
             type: 'image/png',
             purpose: 'maskable'
+          }
+        ],
+        shortcuts: [
+          {
+            name: 'Leave Feedback',
+            short_name: 'Feedback',
+            description: 'Share your dining experience with us',
+            url: '/',
+            icons: [{ src: '/icon-192.png', sizes: '192x192' }]
           }
         ]
       },
